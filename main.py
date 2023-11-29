@@ -37,7 +37,7 @@ color_sensor = ColorSensor(Port.S2)
 # Configura la unidad base (drive base) con los motores
 gyro = GyroSensor(Port.S3)
 
-robot = DriveBase(left_motor, right_motor, wheel_diameter=52, axle_track=125)
+robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=125)
 
 ##########################################
 circunferencia_rueda = 56 * 3.14159
@@ -48,15 +48,24 @@ ubicaciones = []
 # Gyro straight
 def gyro_straight(distance, is_second_run=False):
     target = gyro.angle() # Target angle
-    gain = 7 # Gain
+    p_gain = 1
+    i_gain = 0.001
+    d_gain = 2
     robot.reset() # Reset robot
     global count
     red_detected = False
 
+    integral = 0
+    last_error = 0
+
     while robot.distance() < distance: # Si la distancia actual es menor que la distancia objetivo hasta llegar.
-        correction = target - gyro.angle() # Calcula la correccion
-        turn_power = correction * gain # Calcula la potencia de giro
+        error = target - gyro.angle() # Calcula el error
+        integral = integral + error # Calcula la integral
+        derivative = error - last_error # Calcula la derivada
+        turn_power = (error * p_gain) + (integral * i_gain) + (derivative * d_gain)
         robot.drive(60, turn_power) # Conduce el robot
+
+        last_error = error # Actualiza el error
         
         # Verificar si el color es rojo durante el avance
         if color_sensor.color() == Color.RED and not red_detected:
@@ -67,7 +76,6 @@ def gyro_straight(distance, is_second_run=False):
                 ev3.screen.print("SEGUNDA VUELTA!")
                 distancia_actual = object_distance()
                 distancia_restante = distance - distancia_actual
-                #ev3.screen.print("dist_rest", distancia_restante)
             else:
                 object_distance()
             
@@ -80,15 +88,11 @@ def object_distance():
     # Calcular la distancia total recorrida por el robot
     distancia_total = (left_motor.angle() + right_motor.angle()) * 0.5 * (circunferencia_rueda / 360.0)
     # Posición relativa
-    #print("Dist_rojo:", distancia_total)
     coordenada = (distancia_total,cuad)
     ubicaciones.append(coordenada)
-    #ev3.screen.print(ubicaciones)
     ev3.screen.print("[",distancia_total,"\n",cuad,"]")
-    #print("Cant_rojos:", count)
     
     return distancia_total
-    
 
 ############# GIROS EN EJE #############
 # DERECHA
