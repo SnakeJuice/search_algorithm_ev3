@@ -69,7 +69,6 @@ def gyro_straight(distance, is_second_run=False):
                 distancia_restante = distance - distancia_actual
                 #ev3.screen.print("dist_rest", distancia_restante)
             else:
-                pass
                 object_distance()
             
         elif color_sensor.color() == Color.WHITE or color_sensor.color() == Color.BLACK:
