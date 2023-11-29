@@ -1,11 +1,3 @@
-#---------------------------------------------------------
-# algoritmo para recorre un plano finito usando ev3      #
-# diseñador por:                                         #
-# - Cristian Anjari y Marcos Medina                      #
-#                                                        #
-# Para proyecto de tesis 2023                            #
-#---------------------------------------------------------
-
 #!/usr/bin/env pybricks-micropython
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import (Motor, TouchSensor, ColorSensor, InfraredSensor, UltrasonicSensor, GyroSensor)
@@ -14,6 +6,14 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 import math
+
+#---------------------------------------------------------
+# algoritmo para recorre un plano finito usando ev3      #
+# diseñador por:                                         #
+# - Cristian Anjari y Marcos Medina                      #
+#                                                        #
+# Para proyecto de tesis 2023                            #
+#---------------------------------------------------------
 
 # Inicializa el ladrillo EV3 y los motores
 ev3 = EV3Brick()
