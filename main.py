@@ -1,5 +1,4 @@
 #!/usr/bin/env pybricks-micropython
-
 ##########################################################
 # Algoritmo de navegación y busqueda para robot LEGO EV3 #
 #                                                        #
@@ -40,6 +39,7 @@ gyro = GyroSensor(Port.S3)
 robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=125)
 
 ##########################################
+ROBOT_SPEED = 70
 circunferencia_rueda = 56 * 3.14159
 count = 0
 cuad = 0
@@ -47,42 +47,35 @@ ubicaciones = []
 
 # Gyro straight
 def gyro_straight(distance, is_second_run=False):
-    target = gyro.angle() # Target angle
-    p_gain = 1
-    i_gain = 0.001
-    d_gain = 2
+    gyro.reset_angle(0)
     robot.reset() # Reset robot
     global count
     red_detected = False
 
-    integral = 0
-    last_error = 0
+    while robot.distance() <= distance:
+        correction = (0 - gyro.angle())*3 # Calcula la correccion
+        robot.drive(ROBOT_SPEED, correction) # Conduce el robot
 
-    while robot.distance() < distance: # Si la distancia actual es menor que la distancia objetivo hasta llegar.
-        error = target - gyro.angle() # Calcula el error
-        integral = integral + error # Calcula la integral
-        derivative = error - last_error # Calcula la derivada
-        turn_power = (error * p_gain) + (integral * i_gain) + (derivative * d_gain)
-        robot.drive(60, turn_power) # Conduce el robot
-
-        last_error = error # Actualiza el error
-        
         # Verificar si el color es rojo durante el avance
         if color_sensor.color() == Color.RED and not red_detected:
             count = count + 1
             red_detected = True
-            
+
             if is_second_run:
                 ev3.screen.print("SEGUNDA VUELTA!")
                 distancia_actual = object_distance()
                 distancia_restante = distance - distancia_actual
+                ev3.screen.print("dist_rest", distancia_restante)
             else:
+                pass
                 object_distance()
-            
+
         elif color_sensor.color() == Color.WHITE or color_sensor.color() == Color.BLACK:
             red_detected = False
-   
+
     robot.stop()
+    left_motor.brake()
+    right_motor.brake()
     
 def object_distance():
     # Calcular la distancia total recorrida por el robot
@@ -145,34 +138,61 @@ def gyro_left_turn(degrees):
 
 #primera vuelta
 cuad= cuad + 1
-gyro_straight(1070)
-gyro_right_turn(90)
-gyro_straight(140)
-gyro_right_axis(90)
-left_motor.reset_angle(0)
-right_motor.reset_angle(0)
-
-#segunda vuelta
-cuad= cuad + 1
-gyro_straight(1000, is_second_run=True)
+gyro_straight(1000)
 gyro_left_turn(90)
 gyro_straight(140)
 gyro_left_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
 
-#tercera vuelta
+#segunda vuelta
 cuad= cuad + 1
-gyro_straight(1070)
+gyro_straight(1000)
 gyro_right_turn(90)
-gyro_straight(130)
+gyro_straight(140)
 gyro_right_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
 
-#ultima vuelta
+#tercera vuelta
 cuad= cuad + 1
-gyro_straight(1000, is_second_run=True)
+gyro_straight(1000)
+gyro_left_turn(90)
+gyro_straight(140)
+gyro_left_axis(90)
+left_motor.reset_angle(0)
+right_motor.reset_angle(0)
+
+#cuarta vuelta
+cuad= cuad + 1
+gyro_straight(1000)
+gyro_right_turn(90)
+gyro_straight(140)
+gyro_right_axis(90)
+left_motor.reset_angle(0)
+right_motor.reset_angle(0)
+
+#quinta 
+cuad= cuad + 1
+gyro_straight(1000)
+gyro_left_turn(90)
+gyro_straight(140)
+gyro_left_axis(90)
+left_motor.reset_angle(0)
+right_motor.reset_angle(0)
+
+#sexta
+cuad= cuad + 1
+gyro_straight(1000)
+gyro_right_turn(90)
+gyro_straight(140)
+gyro_right_axis(90)
+left_motor.reset_angle(0)
+right_motor.reset_angle(0)
+
+#septima
+cuad= cuad + 1
+gyro_straight(1000)
 gyro_left_turn(90)
 gyro_straight(140)
 gyro_left_axis(90)
