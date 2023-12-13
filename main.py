@@ -23,7 +23,6 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
-import math
 
 # Inicializa el ladrillo EV3 y los motores
 ev3 = EV3Brick()
@@ -135,66 +134,74 @@ def gyro_left_turn(degrees):
 
     right_motor.brake()
 ##########################################
+rec_dist = 750
 
 #primera vuelta
 cuad= cuad + 1
-gyro_straight(1000)
+gyro_straight(rec_dist)
 gyro_left_turn(90)
 gyro_straight(140)
 gyro_left_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
+ev3.screen.print("1")
 
 #segunda vuelta
 cuad= cuad + 1
-gyro_straight(1000)
+gyro_straight(rec_dist)
 gyro_right_turn(90)
 gyro_straight(140)
 gyro_right_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
+ev3.screen.print("2")
 
 #tercera vuelta
 cuad= cuad + 1
-gyro_straight(1000)
+gyro_straight(rec_dist)
 gyro_left_turn(90)
 gyro_straight(140)
 gyro_left_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
+ev3.screen.print("3")
 
 #cuarta vuelta
 cuad= cuad + 1
-gyro_straight(1000)
+gyro_straight(rec_dist)
 gyro_right_turn(90)
 gyro_straight(140)
 gyro_right_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
+ev3.screen.print("4")
 
 #quinta 
 cuad= cuad + 1
-gyro_straight(1000)
+gyro_straight(rec_dist)
 gyro_left_turn(90)
 gyro_straight(140)
 gyro_left_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
+ev3.screen.print("5")
 
 #sexta
 cuad= cuad + 1
-gyro_straight(1000)
+gyro_straight(rec_dist)
 gyro_right_turn(90)
 gyro_straight(140)
 gyro_right_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
+ev3.screen.print("6")
 
 #septima
 cuad= cuad + 1
-gyro_straight(1000)
+gyro_straight(rec_dist)
 gyro_left_turn(90)
 gyro_straight(140)
 gyro_left_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
+ev3.screen.print("7")
