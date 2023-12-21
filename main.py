@@ -39,7 +39,8 @@ gyro = GyroSensor(Port.S3)
 robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=125)
 
 ##########################################
-ROBOT_SPEED = 70
+ROBOT_SPEED = 40
+
 circunferencia_rueda = 56 * 3.14159
 #Contadores de objetos
 red_count = 0
@@ -98,6 +99,7 @@ def gyro_straight(distance, is_second_run=False):
 
         elif color_sensor.color() == Color.WHITE or color_sensor.color() == Color.BLACK:
             red_detected = False
+            blue_detected = False
 
     robot.stop()
     left_motor.brake()
@@ -122,6 +124,7 @@ def object_coords(distancia,Red=False,Blue=False):
         blue.append(coordenada)
         print("Blue:",blue)
 
+turn_speed_axis = 30
 ############# GIROS EN EJE #############
 # DERECHA
 def gyro_right_axis(degrees):
@@ -129,8 +132,8 @@ def gyro_right_axis(degrees):
     target_angle = gyro.angle() + degrees
 
     while gyro.angle() < target_angle: # Si el gyro es menor que los angulo objetivo
-        left_motor.run(70) # Gira a la derecha
-        right_motor.run(-70)
+        left_motor.run(turn_speed_axis) # Gira a la derecha
+        right_motor.run(-turn_speed_axis)
 
     left_motor.brake()
     right_motor.brake()
@@ -141,14 +144,15 @@ def gyro_left_axis(degrees):
     target_angle = gyro.angle() - degrees
 
     while gyro.angle() > target_angle: # Si el gyro es mayor que el angulo objetivo
-        right_motor.run(70) # Gira a la izquierda
-        left_motor.run(-70)
+        right_motor.run(turn_speed_axis) # Gira a la izquierda
+        left_motor.run(-turn_speed_axis)
 
     left_motor.brake()
     right_motor.brake()
 ##########################################
 
 
+turn_speed_turn = 50
 ############# GIROS EN CURVA #############
 # DERECHA
 def gyro_right_turn(degrees):
@@ -156,7 +160,7 @@ def gyro_right_turn(degrees):
     target_angle = gyro.angle() + degrees
 
     while gyro.angle() < target_angle: # Si el gyro es menor que los angulo objetivo
-        left_motor.run(100) # Gira a la derecha
+        left_motor.run(turn_speed_turn) # Gira a la derecha
 
     left_motor.brake()
 
@@ -166,7 +170,7 @@ def gyro_left_turn(degrees):
     target_angle = gyro.angle() - degrees
 
     while gyro.angle() > target_angle: # Si el gyro es mayor que el angulo objetivo
-        right_motor.run(100) # Gira a la izquierda
+        right_motor.run(turn_speed_turn) # Gira a la izquierda
 
     right_motor.brake()
 ##########################################
