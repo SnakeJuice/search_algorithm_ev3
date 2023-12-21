@@ -23,6 +23,7 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
+import math
 
 # Inicializa el ladrillo EV3 y los motores
 ev3 = EV3Brick()
@@ -40,34 +41,60 @@ robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=125)
 ##########################################
 ROBOT_SPEED = 70
 circunferencia_rueda = 56 * 3.14159
-count = 0
+#Contadores de objetos
+red_count = 0
+blue_count = 0
+#Cuadrante
 cuad = 0
-ubicaciones = []
+#Coordenadas
+red = []
+blue = []
 
 # Gyro straight
 def gyro_straight(distance, is_second_run=False):
     gyro.reset_angle(0)
     robot.reset() # Reset robot
-    global count
+    global red_count, blue_count
     red_detected = False
+    blue_detected = False
 
     while robot.distance() <= distance:
         correction = (0 - gyro.angle())*3 # Calcula la correccion
         robot.drive(ROBOT_SPEED, correction) # Conduce el robot
 
-        # Verificar si el color es rojo durante el avance
+        #Detecta rojo!
         if color_sensor.color() == Color.RED and not red_detected:
-            count = count + 1
+            red_count = red_count + 1
+            #print("Red:",red_count)
             red_detected = True
+            #print("Estado red:", red_detected)
 
             if is_second_run:
-                ev3.screen.print("SEGUNDA VUELTA!")
+                print("SEGUNDA VUELTA!")
                 distancia_actual = object_distance()
                 distancia_restante = distance - distancia_actual
-                ev3.screen.print("dist_rest", distancia_restante)
+                #print("dist_rest", distancia_restante)
+                object_coords(distancia_restante,Red=True)
             else:
-                pass
-                object_distance()
+                distancia_actual = object_distance()
+                object_coords(distancia_actual,Red=True)
+        
+        #Detecta Azul!
+        if color_sensor.color() == Color.BLUE and not blue_detected:
+            blue_count = blue_count + 1
+            #print("Blue:",blue_count)
+            blue_detected = True
+            #print("Estado blue:", blue_detected)
+
+            if is_second_run:
+                print("SEGUNDA VUELTA!")
+                distancia_actual = object_distance()
+                distancia_restante = distance - distancia_actual
+                #print("dist_rest", distancia_restante)
+                object_coords(distancia_restante,Blue=True)
+            else:
+                distancia_actual = object_distance()
+                object_coords(distancia_actual,Blue=True)
 
         elif color_sensor.color() == Color.WHITE or color_sensor.color() == Color.BLACK:
             red_detected = False
@@ -79,12 +106,21 @@ def gyro_straight(distance, is_second_run=False):
 def object_distance():
     # Calcular la distancia total recorrida por el robot
     distancia_total = (left_motor.angle() + right_motor.angle()) * 0.5 * (circunferencia_rueda / 360.0)
-    # Posición relativa
-    coordenada = (distancia_total,cuad)
-    ubicaciones.append(coordenada)
-    ev3.screen.print("[",distancia_total,"\n",cuad,"]")
-    
     return distancia_total
+    
+    
+def object_coords(distancia,Red=False,Blue=False):
+    global red,blue
+
+    coordenada = (distancia,cuad)
+    
+    if Red == True:
+        red.append(coordenada)
+        print("Red:",red)
+    
+    if Blue == True:
+        blue.append(coordenada)
+        print("Blue:",blue)
 
 ############# GIROS EN EJE #############
 # DERECHA
@@ -144,7 +180,7 @@ gyro_straight(140)
 gyro_left_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
-ev3.screen.print("1")
+print("1")
 
 #segunda vuelta
 cuad= cuad + 1
@@ -154,7 +190,7 @@ gyro_straight(140)
 gyro_right_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
-ev3.screen.print("2")
+print("2")
 
 #tercera vuelta
 cuad= cuad + 1
@@ -164,7 +200,7 @@ gyro_straight(140)
 gyro_left_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
-ev3.screen.print("3")
+print("3")
 
 #cuarta vuelta
 cuad= cuad + 1
@@ -174,7 +210,7 @@ gyro_straight(140)
 gyro_right_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
-ev3.screen.print("4")
+print("4")
 
 #quinta 
 cuad= cuad + 1
@@ -184,7 +220,7 @@ gyro_straight(140)
 gyro_left_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
-ev3.screen.print("5")
+print("5")
 
 #sexta
 cuad= cuad + 1
@@ -194,7 +230,7 @@ gyro_straight(140)
 gyro_right_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
-ev3.screen.print("6")
+print("6")
 
 #septima
 cuad= cuad + 1
@@ -204,4 +240,4 @@ gyro_straight(140)
 gyro_left_axis(90)
 left_motor.reset_angle(0)
 right_motor.reset_angle(0)
-ev3.screen.print("7")
+print("7")
