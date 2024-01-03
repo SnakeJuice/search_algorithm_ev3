@@ -6,15 +6,16 @@
 # - Cristian Anjari                                      #
 # - Marcos Medina                                        #
 #                                                        #
-# Para proyecto de tesis 2023                            #
+# Para proyecto de Tesis 2023                            #
 #                                                        #
 # Universidad de Santiago de Chile                       #
 # Facultad de Ciencia                                    #
+#                                                        #
 # Licenciatura en Ciencia de la Computación/             #
 # Analista en Computación Científica                     #
 #                                                        #
 # Santiago, Chile                                        #
-# 29/11/2023                                             #
+# 03/01/2024                                             #
 ##########################################################
 
 from pybricks.hubs import EV3Brick
@@ -57,29 +58,31 @@ ROBOT_SPEED = 30 #Velocidad al avanzar
 turn_speed_axis = 25 #Velocidad de giro en eje
 turn_speed_turn = 40 #Velocidad de giro en curva
 
+rec_dist = 750 #Distancia a recorrer por el robot
+
 circunferencia_rueda = 56 * 3.14159
 #Contadores de objetos
 red_count = 0
-blue_count = 0
+green_count = 0
 #Cuadrante
 cuad = 0
 #Coordenadas
 red = []
-blue = []
+green = []
 
 # Gyro straight
 def gyro_straight(distance, is_second_run=False):
     gyro.reset_angle(0)
     robot.reset() # Reset robot
-    global red_count, blue_count
+    global red_count, green_count
     red_detected = False
-    blue_detected = False
+    green_detected = False
 
     while robot.distance() <= distance:
         correction = (0 - gyro.angle())*3 # Calcula la correccion
         robot.drive(ROBOT_SPEED, correction) # Conduce el robot
 
-        #Detecta rojo!
+        #Detecta Rojo!
         if color_sensor.color() == Color.RED and not red_detected:
             red_count = red_count + 1
             ev3.screen.print("Red:",red_count)
@@ -96,26 +99,26 @@ def gyro_straight(distance, is_second_run=False):
                 distancia_actual = object_distance()
                 object_coords(distancia_actual,Red=True)
         
-        #Detecta Azul!
-        if color_sensor.color() == Color.BLUE and not blue_detected:
-            blue_count = blue_count + 1
-            ev3.screen.print("Blue:",blue_count)
-            blue_detected = True
-            #print("Estado blue:", blue_detected)
+        #Detecta Verde!
+        if color_sensor.color() == Color.GREEN and not green_detected:
+            green_count = green_count + 1
+            ev3.screen.print("Green:",green_count)
+            green_detected = True
+            #print("Estado green:", green_detected)
 
             if is_second_run:
                 print("SEGUNDA VUELTA!")
                 distancia_actual = object_distance()
                 distancia_restante = distance - distancia_actual
                 #print("dist_rest", distancia_restante)
-                object_coords(distancia_restante,Blue=True)
+                object_coords(distancia_restante,Green=True)
             else:
                 distancia_actual = object_distance()
-                object_coords(distancia_actual,Blue=True)
+                object_coords(distancia_actual,Green=True)
 
-        elif color_sensor.color() == Color.WHITE or color_sensor.color() == Color.BLACK:
+        elif color_sensor.color() == Color.BLUE or color_sensor.color() == Color.BLACK:
             red_detected = False
-            blue_detected = False
+            green_detected = False
 
     robot.stop()
     left_motor.brake()
@@ -123,12 +126,11 @@ def gyro_straight(distance, is_second_run=False):
     
 def object_distance():
     # Calcular la distancia total recorrida por el robot
-    distancia_total = (left_motor.angle() + right_motor.angle()) * 0.5 * (circunferencia_rueda / 360.0)
-    return distancia_total
+    return (left_motor.angle() + right_motor.angle()) * 0.5 * (circunferencia_rueda / 360.0)
     
     
-def object_coords(distancia,Red=False,Blue=False):
-    global red,blue
+def object_coords(distancia,Red=False,Green=False):
+    global red,green
 
     coordenada = (distancia,cuad)
     
@@ -136,9 +138,9 @@ def object_coords(distancia,Red=False,Blue=False):
         red.append(coordenada)
         print("Red:",red)
     
-    if Blue == True:
-        blue.append(coordenada)
-        print("Blue:",blue)
+    if Green == True:
+        green.append(coordenada)
+        print("Green:",green)
 
 
 ############# GIROS EN EJE #############
@@ -190,7 +192,7 @@ def gyro_left_turn(degrees):
 
     right_motor.brake()
 #################################################
-rec_dist = 750
+
 
 if(mbox.read()=='inicia buscador'):
     #primera vuelta
