@@ -116,7 +116,7 @@ def gyro_straight(distance, is_second_run=False):
                 distancia_actual = object_distance()
                 object_coords(distancia_actual,Green=True)
 
-        elif color_sensor.color() == Color.BLUE or color_sensor.color() == Color.BLACK:
+        elif color_sensor.color() == Color.BLUE or color_sensor.color() == Color.WHITE:
             red_detected = False
             green_detected = False
 
@@ -195,6 +195,7 @@ def gyro_left_turn(degrees):
 
 
 if(mbox.read()=='inicia buscador'):
+
     #primera vuelta
     cuad= cuad + 1
     gyro_straight(rec_dist)
@@ -264,6 +265,7 @@ if(mbox.read()=='inicia buscador'):
     left_motor.reset_angle(0)
     right_motor.reset_angle(0)
     print("7")
+    
     mbox.send('buscador terminado')
 else:
     print("no se recibio") 
