@@ -132,6 +132,7 @@ def object_distance():
 def object_coords(distancia,Red=False,Green=False):
     global red,green
 
+    distancia = math.floor(distancia/10)
     coordenada = (distancia,cuad)
     
     if Red == True:
