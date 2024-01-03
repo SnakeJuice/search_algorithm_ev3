@@ -66,7 +66,7 @@ def gyro_straight(distance, is_second_run=False):
         #Detecta rojo!
         if color_sensor.color() == Color.RED and not red_detected:
             red_count = red_count + 1
-            #print("Red:",red_count)
+            ev3.screen.print("Red:",red_count)
             red_detected = True
             #print("Estado red:", red_detected)
 
@@ -83,7 +83,7 @@ def gyro_straight(distance, is_second_run=False):
         #Detecta Azul!
         if color_sensor.color() == Color.BLUE and not blue_detected:
             blue_count = blue_count + 1
-            #print("Blue:",blue_count)
+            ev3.screen.print("Blue:",blue_count)
             blue_detected = True
             #print("Estado blue:", blue_detected)
 
@@ -173,7 +173,7 @@ def gyro_left_turn(degrees):
         right_motor.run(turn_speed_turn) # Gira a la izquierda
 
     right_motor.brake()
-##########################################
+#################################################
 rec_dist = 750
 
 #primera vuelta
