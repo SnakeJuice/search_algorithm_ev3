@@ -53,7 +53,9 @@ print('connected!')
 mbox.send('Buscador conectado')
 mbox.wait()
 ##########################################
-ROBOT_SPEED = 40
+ROBOT_SPEED = 30 #Velocidad al avanzar
+turn_speed_axis = 25 #Velocidad de giro en eje
+turn_speed_turn = 40 #Velocidad de giro en curva
 
 circunferencia_rueda = 56 * 3.14159
 #Contadores de objetos
@@ -138,14 +140,14 @@ def object_coords(distancia,Red=False,Blue=False):
         blue.append(coordenada)
         print("Blue:",blue)
 
-turn_speed_axis = 30
+
 ############# GIROS EN EJE #############
 # DERECHA
 def gyro_right_axis(degrees):
     gyro.reset_angle(0)
     target_angle = gyro.angle() + degrees
 
-    while gyro.angle() < target_angle: # Si el gyro es menor que los angulo objetivo
+    while gyro.angle() < target_angle : # Si el gyro es menor que los angulo objetivo
         left_motor.run(turn_speed_axis) # Gira a la derecha
         right_motor.run(-turn_speed_axis)
 
@@ -157,7 +159,7 @@ def gyro_left_axis(degrees):
     gyro.reset_angle(0)
     target_angle = gyro.angle() - degrees
 
-    while gyro.angle() > target_angle: # Si el gyro es mayor que el angulo objetivo
+    while gyro.angle() > target_angle -1.5: # Si el gyro es mayor que el angulo objetivo
         right_motor.run(turn_speed_axis) # Gira a la izquierda
         left_motor.run(-turn_speed_axis)
 
@@ -166,14 +168,14 @@ def gyro_left_axis(degrees):
 ##########################################
 
 
-turn_speed_turn = 50
+
 ############# GIROS EN CURVA #############
 # DERECHA
 def gyro_right_turn(degrees):
     gyro.reset_angle(0)
     target_angle = gyro.angle() + degrees
 
-    while gyro.angle() < target_angle: # Si el gyro es menor que los angulo objetivo
+    while gyro.angle() < target_angle : # Si el gyro es menor que los angulo objetivo
         left_motor.run(turn_speed_turn) # Gira a la derecha
 
     left_motor.brake()
@@ -183,7 +185,7 @@ def gyro_left_turn(degrees):
     gyro.reset_angle(0)
     target_angle = gyro.angle() - degrees
 
-    while gyro.angle() > target_angle: # Si el gyro es mayor que el angulo objetivo
+    while gyro.angle() > target_angle -1.5: # Si el gyro es mayor que el angulo objetivo
         right_motor.run(turn_speed_turn) # Gira a la izquierda
 
     right_motor.brake()
