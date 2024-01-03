@@ -23,6 +23,8 @@ from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
+from pybricks.messaging import BluetoothMailboxClient, TextMailbox
+
 import math
 
 # Inicializa el ladrillo EV3 y los motores
@@ -37,7 +39,19 @@ color_sensor = ColorSensor(Port.S2)
 gyro = GyroSensor(Port.S3)
 
 robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=125)
+SERVER = 'Master'
 
+client = BluetoothMailboxClient()
+mbox = TextMailbox('greeting', client)
+
+print('establishing connection...')
+client.connect(SERVER)
+print('connected!')
+
+# In this program, the client sends the first message and then waits for the
+# server to reply.
+mbox.send('Buscador conectado')
+mbox.wait()
 ##########################################
 ROBOT_SPEED = 40
 
@@ -176,72 +190,76 @@ def gyro_left_turn(degrees):
 #################################################
 rec_dist = 750
 
-#primera vuelta
-cuad= cuad + 1
-gyro_straight(rec_dist)
-gyro_left_turn(90)
-gyro_straight(140)
-gyro_left_axis(90)
-left_motor.reset_angle(0)
-right_motor.reset_angle(0)
-print("1")
+if(mbox.read()=='inicia buscador'):
+    #primera vuelta
+    cuad= cuad + 1
+    gyro_straight(rec_dist)
+    gyro_left_turn(90)
+    gyro_straight(140)
+    gyro_left_axis(90)
+    left_motor.reset_angle(0)
+    right_motor.reset_angle(0)
+    print("1")
 
-#segunda vuelta
-cuad= cuad + 1
-gyro_straight(rec_dist)
-gyro_right_turn(90)
-gyro_straight(140)
-gyro_right_axis(90)
-left_motor.reset_angle(0)
-right_motor.reset_angle(0)
-print("2")
+    #segunda vuelta
+    cuad= cuad + 1
+    gyro_straight(rec_dist)
+    gyro_right_turn(90)
+    gyro_straight(140)
+    gyro_right_axis(90)
+    left_motor.reset_angle(0)
+    right_motor.reset_angle(0)
+    print("2")
 
-#tercera vuelta
-cuad= cuad + 1
-gyro_straight(rec_dist)
-gyro_left_turn(90)
-gyro_straight(140)
-gyro_left_axis(90)
-left_motor.reset_angle(0)
-right_motor.reset_angle(0)
-print("3")
+    #tercera vuelta
+    cuad= cuad + 1
+    gyro_straight(rec_dist)
+    gyro_left_turn(90)
+    gyro_straight(140)
+    gyro_left_axis(90)
+    left_motor.reset_angle(0)
+    right_motor.reset_angle(0)
+    print("3")
 
-#cuarta vuelta
-cuad= cuad + 1
-gyro_straight(rec_dist)
-gyro_right_turn(90)
-gyro_straight(140)
-gyro_right_axis(90)
-left_motor.reset_angle(0)
-right_motor.reset_angle(0)
-print("4")
+    #cuarta vuelta
+    cuad= cuad + 1
+    gyro_straight(rec_dist)
+    gyro_right_turn(90)
+    gyro_straight(140)
+    gyro_right_axis(90)
+    left_motor.reset_angle(0)
+    right_motor.reset_angle(0)
+    print("4")
 
-#quinta 
-cuad= cuad + 1
-gyro_straight(rec_dist)
-gyro_left_turn(90)
-gyro_straight(140)
-gyro_left_axis(90)
-left_motor.reset_angle(0)
-right_motor.reset_angle(0)
-print("5")
+    #quinta 
+    cuad= cuad + 1
+    gyro_straight(rec_dist)
+    gyro_left_turn(90)
+    gyro_straight(140)
+    gyro_left_axis(90)
+    left_motor.reset_angle(0)
+    right_motor.reset_angle(0)
+    print("5")
 
-#sexta
-cuad= cuad + 1
-gyro_straight(rec_dist)
-gyro_right_turn(90)
-gyro_straight(140)
-gyro_right_axis(90)
-left_motor.reset_angle(0)
-right_motor.reset_angle(0)
-print("6")
+    #sexta
+    cuad= cuad + 1
+    gyro_straight(rec_dist)
+    gyro_right_turn(90)
+    gyro_straight(140)
+    gyro_right_axis(90)
+    left_motor.reset_angle(0)
+    right_motor.reset_angle(0)
+    print("6")
 
-#septima
-cuad= cuad + 1
-gyro_straight(rec_dist)
-gyro_left_turn(90)
-gyro_straight(140)
-gyro_left_axis(90)
-left_motor.reset_angle(0)
-right_motor.reset_angle(0)
-print("7")
+    #septima
+    cuad= cuad + 1
+    gyro_straight(rec_dist)
+    gyro_left_turn(90)
+    gyro_straight(140)
+    gyro_left_axis(90)
+    left_motor.reset_angle(0)
+    right_motor.reset_angle(0)
+    print("7")
+    mbox.send('buscador terminado')
+else:
+    print("no se recibio") 
