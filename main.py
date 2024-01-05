@@ -276,10 +276,12 @@ if(mbox.read()=='inicia buscador'):
     #Send data to server
     mbox.send(red_string)
 
+    mbox.wait_new()
+
     if(mbox.read()=='recibido'):
         mbox.send(green_string)
 
-    mbox.wait()
+    mbox.wait_new()
 
     if(mbox.read()=='recibido'):
         mbox.send('buscador terminado')
