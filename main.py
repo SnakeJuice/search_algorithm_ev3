@@ -207,6 +207,7 @@ if(mbox.read()=='inicia buscador'):
     right_motor.reset_angle(0)
     print("1")
 
+    '''
     #segunda vuelta
     cuad= cuad + 1
     gyro_straight(rec_dist)
@@ -266,7 +267,22 @@ if(mbox.read()=='inicia buscador'):
     left_motor.reset_angle(0)
     right_motor.reset_angle(0)
     print("7")
-    
-    mbox.send('buscador terminado')
+    '''
+
+    #Convert red and green to string
+    red_string = str(red)
+    green_string = str(green)
+
+    #Send data to server
+    mbox.send(red_string)
+
+    if(mbox.read()=='recibido'):
+        mbox.send(green_string)
+
+    mbox.wait()
+
+    if(mbox.read()=='recibido'):
+        mbox.send('buscador terminado')
+
 else:
     print("no se recibio") 
