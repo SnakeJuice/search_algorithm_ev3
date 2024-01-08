@@ -40,19 +40,7 @@ color_sensor = ColorSensor(Port.S2)
 gyro = GyroSensor(Port.S3)
 
 robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=125)
-SERVER = 'Master'
 
-client = BluetoothMailboxClient()
-mbox = TextMailbox('greeting', client)
-
-print('establishing connection...')
-client.connect(SERVER)
-print('connected!')
-
-# In this program, the client sends the first message and then waits for the
-# server to reply.
-mbox.send('Buscador conectado')
-mbox.wait()
 ##########################################
 ROBOT_SPEED = 30 #Velocidad al avanzar
 turn_speed_axis = 25 #Velocidad de giro en eje
@@ -194,20 +182,37 @@ def gyro_left_turn(degrees):
     right_motor.brake()
 #################################################
 
+#################################################
+##----------------Partida----------------------##
+#################################################
 
-if(mbox.read()=='inicia buscador'):
+SERVER = 'Master'
 
-    #primera vuelta
-    cuad= cuad + 1
-    gyro_straight(rec_dist)
-    gyro_left_turn(90)
-    gyro_straight(140)
-    gyro_left_axis(90)
-    left_motor.reset_angle(0)
-    right_motor.reset_angle(0)
-    print("1")
+client = BluetoothMailboxClient()
 
-    '''
+mbox = TextMailbox('greeting', client)
+
+print('establishing connection...')
+client.connect(SERVER)
+print('connected!')
+
+while True:
+    mbox.send('Buscador conectado')
+    mbox.wait()
+
+    if(mbox.read()=='inicia buscador'):
+
+        #primera vuelta
+        cuad= cuad + 1
+        gyro_straight(rec_dist)
+        gyro_left_turn(90)
+        gyro_straight(140)
+        gyro_left_axis(90)
+        left_motor.reset_angle(0)
+        right_motor.reset_angle(0)
+        print("1")
+
+    
     #segunda vuelta
     cuad= cuad + 1
     gyro_straight(rec_dist)
@@ -267,7 +272,7 @@ if(mbox.read()=='inicia buscador'):
     left_motor.reset_angle(0)
     right_motor.reset_angle(0)
     print("7")
-    '''
+    
 
     #Convert red and green to string
     red_string = str(red)
@@ -283,8 +288,8 @@ if(mbox.read()=='inicia buscador'):
 
     mbox.wait_new()
 
-    if(mbox.read()=='recibido'):
-        mbox.send('buscador terminado')
+    if(mbox.read()=='listo'):
+        mbox.send('terminado')
 
-else:
-    print("no se recibio") 
+    else:
+        print("no se recibio") 
