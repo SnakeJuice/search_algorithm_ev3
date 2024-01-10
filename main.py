@@ -212,7 +212,7 @@ while True:
         right_motor.reset_angle(0)
         print("1")
 
-    
+    '''
     #segunda vuelta
     cuad= cuad + 1
     gyro_straight(rec_dist)
@@ -272,6 +272,7 @@ while True:
     left_motor.reset_angle(0)
     right_motor.reset_angle(0)
     print("7")
+    '''
     
 
     #Convert red and green to string
