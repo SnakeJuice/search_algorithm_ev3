@@ -150,7 +150,7 @@ def gyro_left_axis(degrees):
     gyro.reset_angle(0)
     target_angle = gyro.angle() - degrees
 
-    while gyro.angle() > target_angle -1.5: # Si el gyro es mayor que el angulo objetivo
+    while gyro.angle() > target_angle - 1: # Si el gyro es mayor que el angulo objetivo
         right_motor.run(turn_speed_axis) # Gira a la izquierda
         left_motor.run(-turn_speed_axis)
 
@@ -212,67 +212,67 @@ while True:
         right_motor.reset_angle(0)
         print("1")
 
-    '''
-    #segunda vuelta
-    cuad= cuad + 1
-    gyro_straight(rec_dist)
-    gyro_right_turn(90)
-    gyro_straight(140)
-    gyro_right_axis(90)
-    left_motor.reset_angle(0)
-    right_motor.reset_angle(0)
-    print("2")
+    
+        #segunda vuelta
+        cuad= cuad + 1
+        gyro_straight(rec_dist)
+        gyro_right_turn(90)
+        gyro_straight(140)
+        gyro_right_axis(90)
+        left_motor.reset_angle(0)
+        right_motor.reset_angle(0)
+        print("2")
 
-    #tercera vuelta
-    cuad= cuad + 1
-    gyro_straight(rec_dist)
-    gyro_left_turn(90)
-    gyro_straight(140)
-    gyro_left_axis(90)
-    left_motor.reset_angle(0)
-    right_motor.reset_angle(0)
-    print("3")
+        #tercera vuelta
+        cuad= cuad + 1
+        gyro_straight(rec_dist)
+        gyro_left_turn(90)
+        gyro_straight(140)
+        gyro_left_axis(90)
+        left_motor.reset_angle(0)
+        right_motor.reset_angle(0)
+        print("3")
 
-    #cuarta vuelta
-    cuad= cuad + 1
-    gyro_straight(rec_dist)
-    gyro_right_turn(90)
-    gyro_straight(140)
-    gyro_right_axis(90)
-    left_motor.reset_angle(0)
-    right_motor.reset_angle(0)
-    print("4")
+        #cuarta vuelta
+        cuad= cuad + 1
+        gyro_straight(rec_dist)
+        gyro_right_turn(90)
+        gyro_straight(140)
+        gyro_right_axis(90)
+        left_motor.reset_angle(0)
+        right_motor.reset_angle(0)
+        print("4")
 
-    #quinta 
-    cuad= cuad + 1
-    gyro_straight(rec_dist)
-    gyro_left_turn(90)
-    gyro_straight(140)
-    gyro_left_axis(90)
-    left_motor.reset_angle(0)
-    right_motor.reset_angle(0)
-    print("5")
+        #quinta 
+        cuad= cuad + 1
+        gyro_straight(rec_dist)
+        gyro_left_turn(90)
+        gyro_straight(140)
+        gyro_left_axis(90)
+        left_motor.reset_angle(0)
+        right_motor.reset_angle(0)
+        print("5")
 
-    #sexta
-    cuad= cuad + 1
-    gyro_straight(rec_dist)
-    gyro_right_turn(90)
-    gyro_straight(140)
-    gyro_right_axis(90)
-    left_motor.reset_angle(0)
-    right_motor.reset_angle(0)
-    print("6")
+        #sexta
+        cuad= cuad + 1
+        gyro_straight(rec_dist)
+        gyro_right_turn(90)
+        gyro_straight(140)
+        gyro_right_axis(90)
+        left_motor.reset_angle(0)
+        right_motor.reset_angle(0)
+        print("6")
 
-    #septima
-    cuad= cuad + 1
-    gyro_straight(rec_dist)
-    gyro_left_turn(90)
-    gyro_straight(140)
-    gyro_left_axis(90)
-    left_motor.reset_angle(0)
-    right_motor.reset_angle(0)
-    print("7")
-    '''
+        #septima
+        cuad= cuad + 1
+        gyro_straight(rec_dist)
+        gyro_left_turn(90)
+        gyro_straight(140)
+        gyro_left_axis(90)
+        left_motor.reset_angle(0)
+        right_motor.reset_angle(0)
+        print("7")
+    
     
 
     #Convert red and green to string
