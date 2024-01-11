@@ -43,8 +43,8 @@ robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=125)
 
 ##########################################
 ROBOT_SPEED = 30 #Velocidad al avanzar
-turn_speed_axis = 25 #Velocidad de giro en eje
-turn_speed_turn = 40 #Velocidad de giro en curva
+turn_speed_axis = 30 #Velocidad de giro en eje
+turn_speed_turn = 45 #Velocidad de giro en curva
 
 rec_dist = 750 #Distancia a recorrer por el robot
 
@@ -150,7 +150,7 @@ def gyro_left_axis(degrees):
     gyro.reset_angle(0)
     target_angle = gyro.angle() - degrees
 
-    while gyro.angle() > target_angle - 1: # Si el gyro es mayor que el angulo objetivo
+    while gyro.angle() > target_angle : # Si el gyro es mayor que el angulo objetivo
         right_motor.run(turn_speed_axis) # Gira a la izquierda
         left_motor.run(-turn_speed_axis)
 
@@ -176,7 +176,7 @@ def gyro_left_turn(degrees):
     gyro.reset_angle(0)
     target_angle = gyro.angle() - degrees
 
-    while gyro.angle() > target_angle -1.5: # Si el gyro es mayor que el angulo objetivo
+    while gyro.angle() > target_angle : # Si el gyro es mayor que el angulo objetivo
         right_motor.run(turn_speed_turn) # Gira a la izquierda
 
     right_motor.brake()
@@ -211,6 +211,8 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("1")
+        wait(10000)
+        gyro.reset_angle(0)
 
     
         #segunda vuelta
@@ -222,6 +224,8 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("2")
+        wait(10000)
+        gyro.reset_angle(0)
 
         #tercera vuelta
         cuad= cuad + 1
@@ -232,6 +236,8 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("3")
+        wait(10000)
+        gyro.reset_angle(0)
 
         #cuarta vuelta
         cuad= cuad + 1
@@ -242,6 +248,8 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("4")
+        wait(10000)
+        gyro.reset_angle(0)
 
         #quinta 
         cuad= cuad + 1
@@ -252,6 +260,8 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("5")
+        wait(10000)
+        gyro.reset_angle(0)
 
         #sexta
         cuad= cuad + 1
@@ -262,16 +272,17 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("6")
+        wait(10000)
+        gyro.reset_angle(0)
 
         #septima
         cuad= cuad + 1
         gyro_straight(rec_dist)
         gyro_left_turn(90)
-        gyro_straight(140)
-        gyro_left_axis(90)
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("7")
+        gyro.reset_angle(0)
     
     
 
