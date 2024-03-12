@@ -81,6 +81,7 @@ def gyro_straight(distance, is_second_run=False):
                 print("SEGUNDA VUELTA!")
                 distancia_actual = object_distance()
                 distancia_restante = distance - distancia_actual
+                distancia_restante = distancia_restante - 17
                 #print("dist_rest", distancia_restante)
                 object_coords(distancia_restante,Red=True)
             else:
@@ -98,6 +99,7 @@ def gyro_straight(distance, is_second_run=False):
                 print("SEGUNDA VUELTA!")
                 distancia_actual = object_distance()
                 distancia_restante = distance - distancia_actual
+                distancia_restante = distancia_restante - 17
                 #print("dist_rest", distancia_restante)
                 object_coords(distancia_restante,Green=True)
             else:
@@ -203,7 +205,7 @@ while True:
     if(mbox.read()=='inicia buscador'):
 
         #primera vuelta
-        cuad= cuad + 1
+        cuad = 17
         gyro_straight(rec_dist)
         gyro_left_turn(90)
         gyro_straight(140)
@@ -216,8 +218,8 @@ while True:
 
     
         #segunda vuelta
-        cuad= cuad + 1
-        gyro_straight(rec_dist)
+        cuad = cuad + 17
+        gyro_straight(rec_dist,is_second_run=True)
         gyro_right_turn(90)
         gyro_straight(140)
         gyro_right_axis(90)
@@ -227,7 +229,7 @@ while True:
         wait(10000)
         gyro.reset_angle(0)
 
-        #tercera vuelta
+        """#tercera vuelta
         cuad= cuad + 1
         gyro_straight(rec_dist)
         gyro_left_turn(90)
@@ -282,7 +284,7 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("7")
-        gyro.reset_angle(0)
+        gyro.reset_angle(0)"""
     
     
 
