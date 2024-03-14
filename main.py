@@ -123,13 +123,18 @@ def object_coords(distancia,Red=False,Green=False):
     global red,green
 
     distancia = math.floor(distancia/10)
-    coordenada = (distancia,cuad)
     
+    # Si se detecta un objeto rojo
     if Red == True:
+        distancia = distancia + 10
+        coordenada = (distancia,cuad)
         red.append(coordenada)
         print("Red:",red)
-    
+
+    # Si se detecta un objeto verde    
     if Green == True:
+        distancia = distancia
+        coordenada = (distancia,cuad)
         green.append(coordenada)
         print("Green:",green)
 
@@ -207,16 +212,16 @@ while True:
         #primera vuelta
         cuad = 17
         gyro_straight(rec_dist)
-        gyro_left_turn(90)
-        gyro_straight(140)
-        gyro_left_axis(90)
-        left_motor.reset_angle(0)
-        right_motor.reset_angle(0)
-        print("1")
-        wait(10000)
-        gyro.reset_angle(0)
+        #gyro_left_turn(90)
+        #gyro_straight(140)
+        #gyro_left_axis(90)
+        #left_motor.reset_angle(0)
+        #right_motor.reset_angle(0)
+        #print("1")
+        #wait(10000)
+        #gyro.reset_angle(0)
 
-    
+        '''
         #segunda vuelta
         cuad = cuad + 17
         gyro_straight(rec_dist,is_second_run=True)
@@ -228,6 +233,7 @@ while True:
         print("2")
         wait(10000)
         gyro.reset_angle(0)
+        '''
 
         """#tercera vuelta
         cuad= cuad + 1
