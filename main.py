@@ -46,7 +46,7 @@ ROBOT_SPEED = 30 #Velocidad al avanzar
 turn_speed_axis = 30 #Velocidad de giro en eje
 turn_speed_turn = 45 #Velocidad de giro en curva
 
-rec_dist = 750 #Distancia a recorrer por el robot
+rec_dist = 820 #Distancia a recorrer por el robot
 
 circunferencia_rueda = 56 * 3.14159
 #Contadores de objetos
@@ -212,20 +212,19 @@ while True:
         #primera vuelta
         cuad = 17
         gyro_straight(rec_dist)
-        #gyro_left_turn(90)
-        #gyro_straight(140)
-        #gyro_left_axis(90)
-        #left_motor.reset_angle(0)
-        #right_motor.reset_angle(0)
-        #print("1")
-        #wait(10000)
-        #gyro.reset_angle(0)
+        gyro_left_axis(90)
+        gyro_straight(140)
+        gyro_left_axis(90)
+        left_motor.reset_angle(0)
+        right_motor.reset_angle(0)
+        print("1")
+        wait(10000)
+        gyro.reset_angle(0)
 
-        '''
         #segunda vuelta
         cuad = cuad + 17
         gyro_straight(rec_dist,is_second_run=True)
-        gyro_right_turn(90)
+        gyro_right_axis(90)
         gyro_straight(140)
         gyro_right_axis(90)
         left_motor.reset_angle(0)
@@ -233,12 +232,12 @@ while True:
         print("2")
         wait(10000)
         gyro.reset_angle(0)
-        '''
+        
 
-        """#tercera vuelta
+        #tercera vuelta
         cuad= cuad + 1
         gyro_straight(rec_dist)
-        gyro_left_turn(90)
+        gyro_left_axis(90)
         gyro_straight(140)
         gyro_left_axis(90)
         left_motor.reset_angle(0)
@@ -250,7 +249,7 @@ while True:
         #cuarta vuelta
         cuad= cuad + 1
         gyro_straight(rec_dist)
-        gyro_right_turn(90)
+        gyro_right_axis(90)
         gyro_straight(140)
         gyro_right_axis(90)
         left_motor.reset_angle(0)
@@ -262,7 +261,7 @@ while True:
         #quinta 
         cuad= cuad + 1
         gyro_straight(rec_dist)
-        gyro_left_turn(90)
+        gyro_left_axis(90)
         gyro_straight(140)
         gyro_left_axis(90)
         left_motor.reset_angle(0)
@@ -274,7 +273,7 @@ while True:
         #sexta
         cuad= cuad + 1
         gyro_straight(rec_dist)
-        gyro_right_turn(90)
+        gyro_right_axis(90)
         gyro_straight(140)
         gyro_right_axis(90)
         left_motor.reset_angle(0)
@@ -286,11 +285,11 @@ while True:
         #septima
         cuad= cuad + 1
         gyro_straight(rec_dist)
-        gyro_left_turn(90)
+        gyro_left_axis(90)
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("7")
-        gyro.reset_angle(0)"""
+        gyro.reset_angle(0)
     
     
 
