@@ -39,11 +39,10 @@ color_sensor = ColorSensor(Port.S2)
 gyro = GyroSensor(Port.S3)
 
 robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=125)
-robot.settings(30,20,50,20)
 
 #################################################
 
-ROBOT_SPEED = 30 #Velocidad al avanzar
+ROBOT_SPEED = 50 #Velocidad al avanzar
 turn_speed_axis = 30 #Velocidad de giro en eje
 turn_speed_turn = 45 #Velocidad de giro en curva
 
@@ -91,7 +90,7 @@ def gyro_straight(distance, is_second_run=False):
                 print("SEGUNDA VUELTA!")
                 distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
                 distancia_restante = distance - distancia_actual # Calculamos la distancia restante
-                distancia_restante = distancia_restante - 17 # Y le restamos el tamaño del robot
+                distancia_restante = distancia_restante #- 17 # Y le restamos el tamaño del robot
                 #print("dist_rest", distancia_restante)
                 object_coords(distancia_restante,Red=True) # Guardamos las coordenadas del objeto rojo
             # Si es una vuelta impar
@@ -111,7 +110,7 @@ def gyro_straight(distance, is_second_run=False):
                 print("SEGUNDA VUELTA!")
                 distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
                 distancia_restante = distance - distancia_actual # Calculamos la distancia restante
-                distancia_restante = distancia_restante - 17 # Y le restamos el tamaño del robot
+                distancia_restante = distancia_restante - 15 # Y le restamos el tamaño del robot
                 #print("dist_rest", distancia_restante)
                 object_coords(distancia_restante,Green=True) # Guardamos las coordenadas del objeto verde
             # Si es una vuelta impar
@@ -253,7 +252,9 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("1")
-        wait(10000)
+        wait(15000)
+        ev3.speaker.beep()
+        wait(2000)
         gyro.reset_angle(0)
 
         #segunda vuelta
@@ -265,7 +266,9 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("2")
-        wait(10000)
+        wait(15000)
+        ev3.speaker.beep()
+        wait(2000)
         gyro.reset_angle(0)
         
 
@@ -278,7 +281,9 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("3")
-        wait(10000)
+        wait(15000)
+        ev3.speaker.beep()
+        wait(2000)
         gyro.reset_angle(0)
 
         #cuarta vuelta
@@ -290,7 +295,9 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("4")
-        wait(10000)
+        wait(15000)
+        ev3.speaker.beep()
+        wait(2000)
         gyro.reset_angle(0)
 
         #quinta 
@@ -302,7 +309,9 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("5")
-        wait(10000)
+        wait(15000)
+        ev3.speaker.beep()
+        wait(2000)
         gyro.reset_angle(0)
 
         #sexta
@@ -314,7 +323,9 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("6")
-        wait(10000)
+        wait(15000)
+        ev3.speaker.beep()
+        wait(2000)
         gyro.reset_angle(0)
 
         #septima
