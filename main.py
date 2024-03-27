@@ -90,7 +90,7 @@ def gyro_straight(distance, is_second_run=False):
                 print("SEGUNDA VUELTA!")
                 distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
                 distancia_restante = distance - distancia_actual # Calculamos la distancia restante
-                distancia_restante = distancia_restante #- 17 # Y le restamos el tamaño del robot
+                distancia_restante = distancia_restante - 20 # Y le restamos el tamaño del robot
                 #print("dist_rest", distancia_restante)
                 object_coords(distancia_restante,Red=True) # Guardamos las coordenadas del objeto rojo
             # Si es una vuelta impar
@@ -110,7 +110,7 @@ def gyro_straight(distance, is_second_run=False):
                 print("SEGUNDA VUELTA!")
                 distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
                 distancia_restante = distance - distancia_actual # Calculamos la distancia restante
-                distancia_restante = distancia_restante - 15 # Y le restamos el tamaño del robot
+                distancia_restante = distancia_restante - 20 # Y le restamos el tamaño del robot
                 #print("dist_rest", distancia_restante)
                 object_coords(distancia_restante,Green=True) # Guardamos las coordenadas del objeto verde
             # Si es una vuelta impar
