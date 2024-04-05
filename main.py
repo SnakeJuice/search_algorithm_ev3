@@ -25,6 +25,7 @@ from pybricks.tools import wait, StopWatch, DataLog
 from pybricks.robotics import DriveBase
 from pybricks.media.ev3dev import SoundFile, ImageFile
 from pybricks.messaging import BluetoothMailboxClient, TextMailbox
+import time
 import math
 
 # Inicializa el ladrillo EV3 y los motores
@@ -42,7 +43,9 @@ robot = DriveBase(left_motor, right_motor, wheel_diameter=56, axle_track=125)
 
 #################################################
 
-ROBOT_SPEED = 50 #Velocidad al avanzar
+DETECTION_DELAY = 3
+
+ROBOT_SPEED = 30 #Velocidad al avanzar
 turn_speed_axis = 30 #Velocidad de giro en eje
 turn_speed_turn = 45 #Velocidad de giro en curva
 
@@ -77,51 +80,60 @@ def gyro_straight(distance, is_second_run=False):
     while robot.distance() <= distance:
         correction = (0 - gyro.angle())*3 # Calcula la correccion
         robot.drive(ROBOT_SPEED, correction) # Conduce el robot
-
+        color = color_sensor.color()
+        
         # Si el sensor de color detecta un objeto rojo
-        if color_sensor.color() == Color.RED and not red_detected:
-            red_count = red_count + 1
-            ev3.screen.print("Red:",red_count)
-            red_detected = True # Marca la flag de objeto rojo detectado
-            #print("Estado red:", red_detected)
-
-            # Si es una vuelta par en el recorrido
-            if is_second_run:
-                print("SEGUNDA VUELTA!")
-                distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
-                distancia_restante = distance - distancia_actual # Calculamos la distancia restante
-                distancia_restante = distancia_restante - 20 # Y le restamos el tamaño del robot
-                #print("dist_rest", distancia_restante)
-                object_coords(distancia_restante,Red=True) # Guardamos las coordenadas del objeto rojo
-            # Si es una vuelta impar
-            else:
-                distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
-                object_coords(distancia_actual,Red=True) # Guardamos las coordenadas del objeto rojo
+        if color == Color.RED:
+            if not red_detected:
+                red_count = red_count + 1
+                ev3.screen.print("Red:",red_count)
+                red_detected = True # Marca la flag de objeto rojo detectado
+                red_detection_time = time.time() # Guarda el tiempo de detección del objeto rojo
+                
+                 # Si es una vuelta par en el recorrido
+                if is_second_run:
+                    print("SEGUNDA VUELTA!")
+                    distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
+                    distancia_restante = distance - distancia_actual # Calculamos la distancia restante
+                    distancia_restante = distancia_restante - 20 # Y le restamos el tamaño del robot
+                    #print("dist_rest", distancia_restante)
+                    object_coords(distancia_restante,Red=True) # Guardamos las coordenadas del objeto rojo
+                # Si es una vuelta impar
+                else:
+                    distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
+                    object_coords(distancia_actual,Red=True) # Guardamos las coordenadas del objeto rojo
+            
+            elif time.time() - red_detection_time > DETECTION_DELAY:
+                red_detected = False
         
         # Si el sensor de color detecta un objeto verde
-        if color_sensor.color() == Color.GREEN and not green_detected:
-            green_count = green_count + 1
-            ev3.screen.print("Green:",green_count)
-            green_detected = True # Marca la flag de objeto verde detectado
-            #print("Estado green:", green_detected)
+        if color == Color.GREEN:
+            if not green_detected:
+                green_count = green_count + 1
+                ev3.screen.print("Green:",green_count)
+                green_detected = True # Marca la flag de objeto verde detectado
+                green_detection_time = time.time() # Guarda el tiempo de detección del objeto verde
+                
+                # Si es una vuelta par en el recorrido
+                if is_second_run:
+                    print("SEGUNDA VUELTA!")
+                    distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
+                    distancia_restante = distance - distancia_actual # Calculamos la distancia restante
+                    distancia_restante = distancia_restante - 20 # Y le restamos el tamaño del robot
+                    #print("dist_rest", distancia_restante)
+                    object_coords(distancia_restante,Green=True) # Guardamos las coordenadas del objeto verde
+                # Si es una vuelta impar
+                else:
+                    distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
+                    object_coords(distancia_actual,Green=True) # Guardamos las coordenadas del objeto verde
 
-            # Si es una vuelta par en el recorrido
-            if is_second_run:
-                print("SEGUNDA VUELTA!")
-                distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
-                distancia_restante = distance - distancia_actual # Calculamos la distancia restante
-                distancia_restante = distancia_restante - 20 # Y le restamos el tamaño del robot
-                #print("dist_rest", distancia_restante)
-                object_coords(distancia_restante,Green=True) # Guardamos las coordenadas del objeto verde
-            # Si es una vuelta impar
-            else:
-                distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
-                object_coords(distancia_actual,Green=True) # Guardamos las coordenadas del objeto verde
+            elif time.time() - green_detection_time > DETECTION_DELAY:
+                green_detected = False
 
         # Si deja de detectar un objeto rojo o verde, reinicia las flags
-        elif color_sensor.color() == Color.BLUE or color_sensor.color() == Color.WHITE:
-            red_detected = False
-            green_detected = False
+        #elif color_sensor.color() == Color.BLUE or color_sensor.color() == Color.WHITE or color_sensor.color() == Color.BLACK:
+        #    red_detected = False
+        #    green_detected = False
 
     robot.stop()
     left_motor.brake()
@@ -171,7 +183,7 @@ def object_coords(distancia,Red=False,Green=False):
 ################ GIROS EN EJE  ##################
 # DERECHA
 def gyro_right_axis(degrees):
-    gyro.reset_angle(0)
+    #gyro.reset_angle(0)
     target_angle = gyro.angle() + degrees # Calcula el angulo objetivo
 
     # Mientras el gyro sea menor que el angulo objetivo
@@ -184,7 +196,7 @@ def gyro_right_axis(degrees):
     
 # IZQUIERDA
 def gyro_left_axis(degrees):
-    gyro.reset_angle(0)
+    #gyro.reset_angle(0)
     target_angle = gyro.angle() - degrees # Calcula el angulo objetivo
 
     # Mientras el gyro sea mayor que el angulo objetivo
@@ -201,7 +213,7 @@ def gyro_left_axis(degrees):
 ############### GIROS EN CURVA  #################
 # DERECHA
 def gyro_right_turn(degrees):
-    gyro.reset_angle(0)
+    #gyro.reset_angle(0)
     target_angle = gyro.angle() + degrees # Calcula el angulo objetivo
 
     # Mientras el gyro sea menor que el angulo objetivo
@@ -212,7 +224,7 @@ def gyro_right_turn(degrees):
 
 # IZQUIERDA
 def gyro_left_turn(degrees):
-    gyro.reset_angle(0)
+    #gyro.reset_angle(0)
     target_angle = gyro.angle() - degrees # Calcula el angulo objetivo
 
     # Mientras el gyro sea mayor que el angulo objetivo
@@ -242,102 +254,83 @@ while True:
     mbox.wait()
 
     if(mbox.read()=='inicia buscador'):
+        
+        gyro.reset_angle(0)
 
         #primera vuelta
-        cuad = cuad + 17
+        cuad = cuad + 20
         gyro_straight(rec_dist)
         gyro_left_axis(90)
-        gyro_straight(170)
+        gyro_straight(250)
         gyro_left_axis(90)
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("1")
-        wait(15000)
+        wait(5000)
         ev3.speaker.beep()
         wait(2000)
-        gyro.reset_angle(0)
+        #gyro.reset_angle(0)
+
 
         #segunda vuelta
-        cuad = cuad + 17
+        cuad = cuad + 20
         gyro_straight(rec_dist,is_second_run=True)
         gyro_right_axis(90)
-        gyro_straight(170)
+        gyro_straight(250)
         gyro_right_axis(90)
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("2")
-        wait(15000)
+        wait(5000)
         ev3.speaker.beep()
         wait(2000)
-        gyro.reset_angle(0)
+        #gyro.reset_angle(0)
         
 
         #tercera vuelta
-        cuad= cuad + 17
+        cuad = cuad + 20
         gyro_straight(rec_dist)
         gyro_left_axis(90)
-        gyro_straight(170)
+        gyro_straight(250)
         gyro_left_axis(90)
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("3")
-        wait(15000)
+        wait(5000)
         ev3.speaker.beep()
         wait(2000)
-        gyro.reset_angle(0)
+        #gyro.reset_angle(0)
+
 
         #cuarta vuelta
-        cuad= cuad + 17
+        cuad = cuad + 20
         gyro_straight(rec_dist,is_second_run=True)
         gyro_right_axis(90)
-        gyro_straight(170)
+        gyro_straight(250)
         gyro_right_axis(90)
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("4")
-        wait(15000)
+        wait(5000)
         ev3.speaker.beep()
         wait(2000)
-        gyro.reset_angle(0)
+        #gyro.reset_angle(0)
+
 
         #quinta 
-        cuad= cuad + 17
+        cuad = cuad + 20
         gyro_straight(rec_dist)
         gyro_left_axis(90)
-        gyro_straight(170)
-        gyro_left_axis(90)
-        left_motor.reset_angle(0)
-        right_motor.reset_angle(0)
-        print("5")
-        wait(15000)
+        gyro_straight(250)
+        #gyro_left_axis(90)
+        #left_motor.reset_angle(0)
+        #right_motor.reset_angle(0)
+        #print("5")
+        #wait(5000)
         ev3.speaker.beep()
-        wait(2000)
-        gyro.reset_angle(0)
+        #wait(2000)
+        #gyro.reset_angle(0)
 
-        #sexta
-        cuad= cuad + 17
-        gyro_straight(rec_dist,is_second_run=True)
-        gyro_right_axis(90)
-        gyro_straight(170)
-        gyro_right_axis(90)
-        left_motor.reset_angle(0)
-        right_motor.reset_angle(0)
-        print("6")
-        wait(15000)
-        ev3.speaker.beep()
-        wait(2000)
-        gyro.reset_angle(0)
-
-        #septima
-        cuad= cuad + 17
-        gyro_straight(rec_dist)
-        gyro_left_axis(90)
-        left_motor.reset_angle(0)
-        right_motor.reset_angle(0)
-        print("7")
-        gyro.reset_angle(0)
-        gyro_straight(220)
-    
 
     #Convert red and green to string
     red_string = str(red)
