@@ -103,6 +103,7 @@ def gyro_straight(distance, is_second_run=False):
                     distancia_actual = object_distance() # Obtenemos la distancia actual recorrida por el robot
                     object_coords(distancia_actual,Red=True) # Guardamos las coordenadas del objeto rojo
             
+            # Si el tiempo de detección del objeto rojo es mayor al tiempo de espera
             elif time.time() - red_detection_time > DETECTION_DELAY:
                 red_detected = False
         
