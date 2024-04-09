@@ -267,9 +267,9 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("1")
-        wait(5000)
+        wait(15000)
         ev3.speaker.beep()
-        wait(2000)
+        wait(5000)
         #gyro.reset_angle(0)
 
 
@@ -282,9 +282,9 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("2")
-        wait(5000)
+        wait(15000)
         ev3.speaker.beep()
-        wait(2000)
+        wait(5000)
         #gyro.reset_angle(0)
         
 
@@ -297,9 +297,9 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("3")
-        wait(5000)
+        wait(15000)
         ev3.speaker.beep()
-        wait(2000)
+        wait(5000)
         #gyro.reset_angle(0)
 
 
@@ -312,9 +312,9 @@ while True:
         left_motor.reset_angle(0)
         right_motor.reset_angle(0)
         print("4")
-        wait(5000)
+        wait(15000)
         ev3.speaker.beep()
-        wait(2000)
+        wait(5000)
         #gyro.reset_angle(0)
 
 
@@ -327,9 +327,9 @@ while True:
         #left_motor.reset_angle(0)
         #right_motor.reset_angle(0)
         #print("5")
-        #wait(5000)
+        #wait(15000)
         ev3.speaker.beep()
-        #wait(2000)
+        #wait(5000)
         #gyro.reset_angle(0)
 
 
